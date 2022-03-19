@@ -17,6 +17,15 @@ permissions:
   packages: write
 
 jobs:
+  pass:
+    name: I pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: Live
+        shell: bash
+        run: |
+          echo "Hi"
+
   fail:
     name: I fail
     runs-on: ubuntu-latest
@@ -26,29 +35,17 @@ jobs:
         run: |
           exit 1
 
-  middle:
-    name: Middle
-    needs:
-      - fail
-      # and other needs
-    runs-on: ubuntu-latest
-    steps:
-      - name: I do nothing
-        shell: bash
-        run: |
-          echo "No"
-
   done:
     name: Done
     if: ${{ always() }}
     needs:
-      - middle
+      - pass
+      - fail
     runs-on: ubuntu-latest
     steps:
       - name: Write
         shell: bash
-        # if:
+        if: ${{ contains(needs.*.result, 'failure') }}
         run: |
-          echo ${{ toJSON(needs.middle) }}
 
           exit 1
