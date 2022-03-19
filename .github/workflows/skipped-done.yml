@@ -43,6 +43,11 @@ jobs:
       - fail
     runs-on: ubuntu-latest
     steps:
+      - name: show
+        shell: bash
+        run: |
+          echo "${{ contains(needs.*.result, 'failure') }}"
+
       - name: Write
         shell: bash
         if: ${{ contains(needs.*.result, 'failure') }}
