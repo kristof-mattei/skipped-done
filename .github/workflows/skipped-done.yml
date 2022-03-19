@@ -49,6 +49,6 @@ jobs:
         shell: bash
         # if:
         run: |
-          echo ${{ needs.middle.status }}
+          echo ${{ toJSON(needs.middle) }}
 
           exit 1
