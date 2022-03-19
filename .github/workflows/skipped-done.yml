@@ -49,6 +49,6 @@ jobs:
         shell: bash
         # if:
         run: |
-          echo ${{ needs.status }}
+          echo ${{ needs.middle.status }}
 
           exit 1
