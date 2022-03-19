@@ -17,8 +17,8 @@ permissions:
   packages: write
 
 jobs:
-  changes:
-    name: Skipped
+  fail:
+    name: I fail
     runs-on: ubuntu-latest
     steps:
       - name: Die
@@ -30,7 +30,7 @@ jobs:
     name: Done
     if: ${{ always() }}
     needs:
-      - changes
+      - fail
     runs-on: ubuntu-latest
     steps:
       - name: Write
