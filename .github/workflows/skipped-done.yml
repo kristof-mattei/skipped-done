@@ -26,16 +26,24 @@ jobs:
         run: |
           exit 1
 
+  middle:
+    name: Middle
+    needs:
+      - fail
+      # and other needs
+    runs-on: ubuntu-latest
+
   done:
     name: Done
     if: ${{ always() }}
     needs:
-      - fail
+      - middle
     runs-on: ubuntu-latest
     steps:
       - name: Write
         shell: bash
-        if: ${{ failure() }}
+        # if:
         run: |
-          echo FAIL
+          echo ${{ needs.status }}
+
           exit 1
