@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+  issues: write
+  packages: write
+
+jobs:
+  changes:
+    name: Skipped
+    runs-on: ubuntu-latest
+    steps:
+      - name: Die
+        shell: bash
+        run: |
+          exit 1
+
+  done:
+    name: Done
+    if: ${{ always() }}
+    needs:
+      - changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write
+        shell: bash
+        if: ${{ failure() }}
+        run: |
+          echo FAIL
+          exit 1
