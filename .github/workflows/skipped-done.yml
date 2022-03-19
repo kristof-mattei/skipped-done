@@ -32,6 +32,11 @@ jobs:
       - fail
       # and other needs
     runs-on: ubuntu-latest
+    steps:
+      - name: I do nothing
+        shell: bash
+        run: |
+          echo "No"
 
   done:
     name: Done
