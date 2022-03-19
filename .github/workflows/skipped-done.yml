@@ -27,13 +27,13 @@ jobs:
           echo "Hi"
 
   fail:
-    name: I fail
+    name: I don't fail
     runs-on: ubuntu-latest
     steps:
       - name: Die
         shell: bash
         run: |
-          exit 1
+          exit 0
 
   done:
     name: Done
