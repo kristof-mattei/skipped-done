@@ -17,22 +17,40 @@ permissions:
   packages: write
 
 jobs:
-  changes:
-    name: Skipped
+  pass:
+    name: I pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: Live
+        shell: bash
+        run: |
+          echo "Hi"
+
+  fail:
+    name: I don't fail
     runs-on: ubuntu-latest
     steps:
       - name: Die
         shell: bash
         run: |
-          exit 1
+          exit 0
 
   done:
     name: Done
+    if: ${{ always() }}
     needs:
-      - changes
+      - pass
+      - fail
     runs-on: ubuntu-latest
     steps:
-      - name: Write
+      - name: show
         shell: bash
         run: |
-          echo "Hello!"
+          echo "${{ contains(needs.*.result, 'failure') }}"
+
+      - name: Write
+        shell: bash
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: |
+
+          exit 1
